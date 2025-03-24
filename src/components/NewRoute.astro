@@ -1,8 +1,8 @@
 ---
 import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
-import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import ShowMiddleware from './ShowMiddleware.astro';
+import Renderer from './Renderer.astro';
 
 export const getStaticPaths = (async () => {
   const pages = await getCollection("docs");
@@ -22,7 +22,6 @@ export const getStaticPaths = (async () => {
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { entry } = Astro.props as Props;
-const { Content } = await render(entry);
 
 ---
 
@@ -31,5 +30,5 @@ const { Content } = await render(entry);
     title: entry.data.title + " - NEW!",
   }}
 >
-  <Content />
+  <Renderer {entry} />
 </StarlightPage>
