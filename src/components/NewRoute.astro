@@ -1,6 +1,8 @@
 ---
-import type { GetStaticPaths } from 'astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import ShowMiddleware from './ShowMiddleware.astro';
 
 export const getStaticPaths = (async () => {
   const pages = await getCollection("docs");
@@ -17,9 +19,10 @@ export const getStaticPaths = (async () => {
   return paths;
 }) satisfies GetStaticPaths;
 
-// starlightRouteDataTest is undefined
-console.log(Astro.locals.starlightRouteDataTest.currentMode);
 ---
 
-
-<p>Some page</p>
+<StarlightPage frontmatter={{
+  title: "New Route"}}>
+  <p>Custom page</p>
+  <ShowMiddleware />
+</StarlightPage>
