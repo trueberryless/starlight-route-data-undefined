@@ -19,10 +19,17 @@ export const getStaticPaths = (async () => {
   return paths;
 }) satisfies GetStaticPaths;
 
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { entry } = Astro.props as Props;
+const { Content } = await render(entry);
+
 ---
 
-<StarlightPage frontmatter={{
-  title: "New Route"}}>
-  <p>Custom page</p>
-  <ShowMiddleware />
+<StarlightPage
+  frontmatter={{
+    title: entry.data.title + " - NEW!",
+  }}
+>
+  <Content />
 </StarlightPage>
